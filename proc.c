@@ -541,7 +541,9 @@ sleep1(void *chan, struct spinlock *lk) {
   if(lk == 0)
       panic("sleep without lk");
   acquire(&ptable.lock); lk->locked = 0;
-  // Go to sleep. p->chan = chan; p->state = SLEEPING;
+  // Go to sleep.
+  p->chan = chan;
+  p->state = SLEEPING;
   sched();
   // Tidy up.
   p->chan = 0;

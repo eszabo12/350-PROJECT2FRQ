@@ -8,8 +8,6 @@
 int main() {
     struct condvar cv;
     init_lock(&cv.lk);
-    // acquire(&cv.lk);
-
     int pid = fork(); //fork the first child
     if(pid < 0) {
         printf(1, "Error forking first child.\n"); }
@@ -24,10 +22,11 @@ int main() {
         if(pid < 0) {
         printf(1, "Error forking second child.\n"); }
         else if(pid == 0) {
+            printf(1, "Child 2 Executing\n");
             lock(&cv.lk);
             cv_wait(&cv);
             unlock(&cv.lk);
-            printf(1, "Child 2 Executing\n"); }
+             }
         else {
             printf(1, "Parent Waiting\n");
             int i;
